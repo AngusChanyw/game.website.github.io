@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic Tac Toe</title>
+<style>
+    .body {
+    height: 310px;
+    width: 359px;
+    border: solid 1px #ECEDF0;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    }
+
+    .name {
+    text-align: center;
+    margin: 5px;
+    font-size: 30px;
+    font-weight: bold;
+    }
+
+    .manual {
+    display: flex;
+    justify-content: center;
+    margin: 5px;
+    }
+
+    .box {
+    height: 20px;
+    width: 100px;
+    border: solid 1px #DCDCDC;
+    border-radius: 5px;
+    margin: 5px 10px;
+    box-shadow: 1px 1px 1px #DCDCDC;
+    }
+
+    .box div,span {
+        margin: 3px;
+        font-size: 5px;
+        text-align: center;
+    }
+
+    .flex {
+    display: flex;
+    height: 160px;
+    width: 160px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-content: space-between;
+    background-color:#15A091;   
+    }
+
+    .flex div {
+    background-color: #1BBCAB;
+    height: 48px;
+    width: 48px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    }
+
+    .background {
+    background-color: #1BBCAB;
+    height: 160px;
+    width: 360px;
+    display: flex;
+    justify-content: center;
+    }
+
+    .player {
+        text-align: center;
+        margin: 5px;
+    }
+
+    .return {
+        width: 15%;
+        margin: 10px;
+        border: solid 2px rgb(30, 0, 255);
+        padding: 5px 10px;
+        text-align: center;
+        color: red;
+        text-decoration: none;
+        }
+
+    .reset {
+        color: #1CBCAB;
+        font-size: 15px;
+        text-decoration: none;
+        display: flex;
+        justify-content: center;
+        margin: 7px;
+    }
+
+</style>
+</head>
+<body>
+    <div class="body">
+        <div class="name">
+            <div>井字過三關</div>
+        </div>
+
+        <div class="manual">
+            <div class="box">
+                <div>O 玩家 : <span class="oScore">0</span></div>
+            </div>
+            <div class="box">
+                <div>X 玩家 : <span class="xScore">0</span></div>
+            </div>
+        </div>
+
+        <div class="player">第一位玩家是 O </div>
+
+        <div class="background">
+            <div class="flex">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+        <a href="#" class="reset">重新開始</a>
+    </div>
+    
+    <div>
+        <a href="../Landing-page.html" class="return">< 返回目錄</a>
+    </div>
+    
+
+    <script>
+        let x = `<svg xmlns="http://www.w3.org/2000/svg" 
+        width="40" height="40" fill="currentColor" class="x" viewBox="0 0 16 16">
+        <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+        </svg>`
+
+        let o = `<svg xmlns="http://www.w3.org/2000/svg" 
+        width="40" height="40" fill="currentColor" class="circle" viewBox="0 0 16 16">
+        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+        </svg>
+        `
+
+        let oScore = document.querySelector('.oScore')
+        let xScore = document.querySelector('.xScore')
+        let player = document.querySelector('.player')
+
+        const win = [
+            [0,1,2],
+            [3,4,5],
+            [6,7,8],
+            [0,3,6],
+            [1,4,7],
+            [2,5,8],
+            [0,4,8],
+            [6,4,2],
+        ]
+
+        let board = [
+            null, null, null,
+            null, null, null,
+            null, null, null,
+        ]
+
+        function checkWin(){
+            win.forEach(function(condition){
+                if (board[condition[0]] !== null){
+                    if (board[condition[0]] === board[condition[1]] &&
+                        board[condition[0]] === board[condition[2]]){
+                            window.alert(board[condition[0]] + " 玩家已勝!!")
+                            player.innerHTML = "請按重新開始"
+                            reset();
+                        }
+                }
+            })
+        }
+
+        let boxes = document.querySelectorAll('.flex div')
+        let checkNumber = 0;
+
+        boxes.forEach(function(box, index){
+            box.addEventListener('click', function(e){
+                if (e.target.innerHTML === ""){
+                    e.target.innerHTML = checkNumber % 2 === 0? o : x
+                    board[index] = checkNumber % 2? "X" : "O"
+                    checkNumber ++
+                    score()
+                    checkWin()
+                    //console.log(board)
+                    //console.log(checkNumber)
+                }
+            })
+        })
+
+        function score() {
+            if (checkNumber % 2 == 0) {
+                xScore.innerHTML++
+                player.innerHTML = "下一位輪到 O"
+            } else if (checkNumber % 2 == 1) {
+                oScore.innerHTML++
+                player.innerHTML = "下一位輪到 X"
+            }
+        }
+
+        function reset() {
+            for (let box of boxes) {
+                box.innerHTML = "";
+            }
+            checkNumber = 0;
+            xScore.innerHTML = 0;
+            oScore.innerHTML = 0;
+            board = [
+            null, null, null,
+            null, null, null,
+            null, null, null,
+            ]
+        }
+
+        let re = document.querySelector('.reset')
+        re.addEventListener('click', function(){
+            reset();
+        })
+ 
+        
+    </script>
+</body>
+</html>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Dancing Game</title>
+    <style>
+        div{
+            margin:10px;
+            font-size: 100px;
+        }
+
+        i{
+            margin:10px;
+            font-size: 70px;
+        }
+
+        .current{
+            color:red;
+            margin: 0px;
+            padding: 0px;
+            font-size: 3px;
+        }
+
+        .score{
+            color: #749B6C;
+        }
+
+        .name{
+            font-size: 70px;
+            font-weight: bold;
+            color: #E04B8C;
+        }
+
+        .counter{
+            border: solid 2px #F7A5A0;
+            width: 25%;
+            background-color: #F5E2DB;
+            text-align: center;
+            font-size: 30px;
+            padding: 5px 15px;
+        }
+
+        .return {
+            width: 15%;
+            margin: 10px;
+            border: solid 2px rgb(30, 0, 255);
+            padding: 8px 18px;
+            text-align: center;
+            color: red;
+            text-decoration: none;
+        }
+
+        .reset {
+            width: 15%;
+            margin: 10px;
+            border: solid 2px blue;
+            padding: 8px 18px;
+            text-align: center;
+            background-color: #566C97;
+            color: black;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="name">Dancing Game </div>
+
+    <div>
+        <div class="counter">Score Counter: <span class="score">0</span> </div>
+    </div>
+
+    <div class="current"></div>
+    <div class="bottons">
+        <i class="fas fa-arrow-up"></i>
+        <i class="fas fa-arrow-down"></i>
+        <i class="fas fa-arrow-left"></i>
+        <i class="fas fa-arrow-right"></i>
+    </div>
+
+    <a href="../Landing-page.html" class="return">< 返回目錄</a>
+    <a href="#" class="reset">重新開始</a>
+
+    <script>
+        let current = document.querySelector(".current")
+        let rand = Math.floor(Math.random() * 4)
+        function nextDance(){
+            rand = Math.floor(Math.random() * 4)
+            if (rand == 0){
+                current.innerHTML = '<i class="fas fa-arrow-up"></i>'
+            } else if (rand == 1){
+                current.innerHTML = '<i class="fas fa-arrow-down"></i>'
+            } else if (rand == 2){
+                current.innerHTML = '<i class="fas fa-arrow-left"></i>'
+            } else if (rand == 3){
+                current.innerHTML = '<i class="fas fa-arrow-right"></i>'
+            }
+        }
+
+        nextDance()
+        let score = document.querySelector(".score")
+        let arrows = document.querySelectorAll(".bottons i")
+        for(let arrow of arrows){
+            arrow.addEventListener("click", function(){
+                if (rand == 0 && arrow.classList.contains("fa-arrow-up")){
+                    console.log("correct")
+                    score.innerHTML = parseInt(score.innerHTML) + 1
+                } else if (rand == 1 && arrow.classList.contains("fa-arrow-down")){
+                    console.log("correct")
+                    score.innerHTML = parseInt(score.innerHTML) + 1
+                } else if (rand == 2 && arrow.classList.contains("fa-arrow-left")){
+                    console.log("correct")
+                    score.innerHTML = parseInt(score.innerHTML) + 1
+                } else if (rand == 3 && arrow.classList.contains("fa-arrow-right")){
+                    console.log("correct")
+                    score.innerHTML = parseInt(score.innerHTML) + 1
+                }else {
+                    console.log("incorrect")
+                    score.innerHTML = parseInt(score.innerHTML) - 1
+                }
+                nextDance()
+            })
+        }
+
+        document.body.addEventListener("keydown", function(keyboard){
+            if (keyboard.keyCode == "37" && rand == 2){
+                console.log("correct")
+                score.innerHTML = parseInt(score.innerHTML) + 1
+            } else if (keyboard.keyCode == "38" && rand == 0){
+                console.log("correct")
+                score.innerHTML = parseInt(score.innerHTML) + 1
+            } else if (keyboard.keyCode == "39" && rand == 3){
+                console.log("correct")
+                score.innerHTML = parseInt(score.innerHTML) + 1
+            } else if (keyboard.keyCode == "40" && rand == 1){
+                console.log("correct")
+                score.innerHTML = parseInt(score.innerHTML) + 1
+            } else {
+                    console.log("incorrect")
+                    score.innerHTML = parseInt(score.innerHTML) - 1
+            }
+            nextDance()
+        })
+
+        let reSet = document.querySelector(".reset")
+        reSet.addEventListener("click", function(){
+            score.innerHTML = 0
+        })
+        
+    </script>
+</body>
+</html>
